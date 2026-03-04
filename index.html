@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Document Doctor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blue: #143A66;
+  --red: #D62828;
+  --dark: #0F1E2E;
+  --dark-card: #16283D;
+  --light: #F4F6F8;
+  --light-card: #FFFFFF;
+  --text-dark: #0F1E2E;
+  --text-light: #E6EDF5;
+  --icon-dark: #5B9BD5;
+  --icon-light: #143A66;
+  --accent: #D62828;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--dark);
+  color: var(--text-light);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.light {
+  background: var(--light);
+  color: var(--text-dark);
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 20px 80px;
+  text-align: center;
+}
+
+/* ── Logo ── */
+.logo-wrapper {
+  display: inline-block;
+  margin-bottom: 36px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 14px 22px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.28);
+}
+
+body.light .logo-wrapper {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border: 1px solid #DDE3EB;
+}
+
+.logo { width: 260px; display: block; }
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.subtitle {
+  margin: 0 auto 48px;
+  opacity: 0.75;
+  max-width: 540px;
+  line-height: 1.6;
+}
+
+.service-label {
+  font-size: 0.7rem;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin: 28px 0 6px 4px;
+  text-align: left;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--dark-card);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-align: left;
+  border: 1px solid rgba(91,155,213,0.08);
+  transition: border-color 0.25s ease;
+}
+
+body.light .card {
+  background: var(--light-card);
+  border: 1px solid #DDE3EB;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card:hover { border-color: rgba(91,155,213,0.22); }
+body.light .card:hover { border-color: #B5C8DE; }
+
+.card-header {
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.97rem;
+  gap: 14px;
+}
+
+.icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(91,155,213,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.25s ease;
+}
+
+body.light .icon-wrap { background: rgba(20,58,102,0.08); }
+.card:hover .icon-wrap,
+.card.active .icon-wrap { background: rgba(214,40,40,0.12); }
+
+.icon-wrap svg {
+  stroke: var(--icon-dark);
+  transition: stroke 0.25s ease;
+}
+
+body.light .icon-wrap svg { stroke: var(--icon-light); }
+.card.active .icon-wrap svg,
+.card:hover .icon-wrap svg { stroke: var(--accent); }
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  opacity: 0.4;
+  flex-shrink: 0;
+  transition: transform 0.35s ease, opacity 0.2s ease;
+}
+
+.card.active .chevron { transform: rotate(180deg); opacity: 0.8; }
+
+.card-content {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 22px;
+  opacity: 0;
+  line-height: 1.75;
+  transition: max-height 0.45s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+
+.card.active .card-content {
+  max-height: 1200px;
+  padding: 4px 22px 24px;
+  opacity: 1;
+}
+
+.card-content p { margin: 0 0 14px; font-size: 0.95rem; }
+.card-content p:last-child { margin-bottom: 0; }
+
+/* Red only on first paragraph */
+.card-content p:first-child { color: var(--accent); font-weight: 500; }
+
+/* ── CTA ── */
+.cta-section {
+  margin-top: 56px;
+  padding: 32px;
+  border-radius: 10px;
+  background: var(--dark-card);
+  text-align: center;
+  border: 1px solid rgba(91,155,213,0.1);
+}
+
+body.light .cta-section {
+  background: var(--light-card);
+  border: 1px solid #DDE3EB;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.cta-section h2 {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0 0 14px;
+}
+
+.cta-section p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0 auto 10px;
+  opacity: 0.85;
+  max-width: 520px;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 32px;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.cta-button:hover { background: #b81f1f; transform: translateY(-1px); }
+
+/* ════════════════════════════════════════
+   DESKTOP: fixed corners
+   ════════════════════════════════════════ */
+.toggle {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  opacity: 0.5;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.toggle:hover { opacity: 0.9; }
+
+.abn {
+  position: fixed;
+  bottom: 18px;
+  right: 20px;
+  font-size: 0.72rem;
+  opacity: 0.35;
+  letter-spacing: 0.4px;
+  pointer-events: none;
+  font-family: 'Inter', sans-serif;
+  z-index: 10;
+}
+
+/* Override any platform auto-linking on ABN */
+.abn a,
+.mob-bottom-bar a {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+/* Mobile elements — hidden on desktop */
+.mob-top-bar,
+.mob-bottom-bar { display: none; }
+
+/* ════════════════════════════════════════
+   MOBILE
+   ════════════════════════════════════════ */
+@media (max-width: 640px) {
+
+  .toggle, .abn { display: none; }
+
+  .mob-top-bar {
+    display: block;
+    padding: 14px 20px;
+    text-align: left;
+  }
+
+  .mob-toggle {
+    font-size: 0.78rem;
+    cursor: pointer;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .mob-toggle:hover { opacity: 0.9; }
+
+  .mob-bottom-bar {
+    display: block;
+    padding: 16px 20px 28px;
+    text-align: right;
+    font-size: 0.72rem;
+    opacity: 0.35;
+    letter-spacing: 0.4px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .container { padding-top: 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Mobile top bar (toggle, top-left) -->
+<div class="mob-top-bar">
+  <span class="mob-toggle" onclick="toggleMode()" id="modeToggleMob">
+    <svg id="mob-toggle-icon" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+      <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+      <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+      <line x1="19.07" y1="4.93" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.93" y2="19.07"/>
+    </svg>
+    <span id="mob-toggle-label">Light Mode</span>
+  </span>
+</div>
+
+<!-- Desktop fixed toggle -->
+<div class="toggle" onclick="toggleMode()" id="modeToggle">
+  <svg id="desk-toggle-icon" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+    <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+    <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+    <line x1="19.07" y1="4.93" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.93" y2="19.07"/>
+  </svg>
+  <span id="desk-toggle-label">Light Mode</span>
+</div>
+
+<!-- Desktop fixed ABN -->
+<div class="abn"><span>ABN: 85 590 192 267</span></div>
+
+<div class="container">
+
+  <div class="logo-wrapper">
+    <img src="logo.png" class="logo" alt="The Document Doctor">
+  </div>
+
+  <h1>The Document Doctor for MSPs</h1>
+  <p class="subtitle">
+    Diagnosing messy SOPs and prescribing scalable documentation systems,
+    curing onboarding headaches one procedure at a time.
+  </p>
+
+  <!-- Document Diagnosis -->
+  <div class="service-label">Quick Checkup</div>
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon-wrap">
+          <svg width="20" height="20" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 2v6h6"/>
+            <line x1="8" y1="13" x2="16" y2="13" stroke-linecap="round"/>
+            <line x1="8" y1="17" x2="12" y2="17" stroke-linecap="round"/>
+          </svg>
+        </div>
+        Document Diagnosis
+      </div>
+      <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <p>Is your documentation actually helping, or quietly hurting your business?</p>
+      <p>Document Diagnosis is a deep-dive health check of your SOPs and internal documentation. I examine structure, clarity, completeness, and audit readiness to uncover hidden risks, inefficiencies, and knowledge gaps.</p>
+      <p>You'll receive a plain-English diagnosis and a prioritised treatment plan, so you know exactly what needs fixing, what can wait, and what's already healthy. No guesswork. No over-documenting. Just clarity.</p>
+    </div>
+  </div>
+
+  <!-- SOP Surgery -->
+  <div class="service-label">Complete Rebuild</div>
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon-wrap">
+          <svg width="20" height="20" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/>
+          </svg>
+        </div>
+        SOP Surgery
+      </div>
+      <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <p>Is your documentation bloated, broken, or impossible to follow?</p>
+      <p>SOP Surgery is a hands-on service where I repair, restructure, and rewrite your SOPs so they're clear, consistent, and actually usable. I remove ambiguity, close knowledge gaps, and redesign procedures to reflect how your team really works, not how someone thought they worked years ago.</p>
+      <p>You'll walk away with clean, scalable, audit-ready SOPs that reduce onboarding time, eliminate guesswork, and stand up to real-world use. No band-aids. No copy-paste templates. Just documentation that works.</p>
+    </div>
+  </div>
+
+  <!-- Prescriptions -->
+  <div class="service-label">Specialist Support</div>
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon-wrap">
+          <svg width="20" height="20" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        Prescriptions
+      </div>
+      <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <p>Not every documentation problem needs surgery, but it does need the right treatment.</p>
+      <p>Prescriptions is a strategic guidance service that gives you a clear, practical plan to improve your documentation without committing to a full rewrite. Based on your current systems, tools, and goals, I prescribe exactly what to document, how to structure it, and where to focus for maximum impact.</p>
+      <p>You'll receive tailored recommendations, templates, and next steps your team can act on with confidence, reducing risk, improving consistency, and setting your documentation up to scale. The right treatment, at the right dose.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Book a Consult</h2>
+    <p>Not sure what your documentation needs yet?</p>
+    <p>Book a Free Quote for a no-pressure starting point to discuss your documentation challenges, goals, and timelines. I'll review the basics, ask the right questions, and outline the most suitable service, whether that's a Diagnosis, Surgery, or Prescription.</p>
+    <p>No obligation. No hard sell. Just clarity on scope, cost, and next steps.</p>
+    <button class="cta-button" onclick="window.location.href='YOUR_BOOKING_LINK'">
+      Book a Free Quote
+    </button>
+  </div>
+
+</div>
+
+<!-- Mobile bottom bar (ABN, bottom-right) -->
+<div class="mob-bottom-bar"><span>ABN: 85 590 192 267</span></div>
+
+<script>
+function toggleCard(card) {
+  card.classList.toggle("active");
+}
+
+// Sun rays SVG (light mode) and moon SVG (dark mode)
+const sunIcon = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.93" y2="19.07"/></svg>`;
+const moonIcon = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>`;
+
+function toggleMode() {
+  const body = document.body;
+  const isLight = body.classList.toggle("light");
+
+  const icon  = isLight ? moonIcon : sunIcon;
+  const label = isLight ? "Dark Mode" : "Light Mode";
+
+  document.getElementById("desk-toggle-icon").outerHTML = icon;
+  document.getElementById("mob-toggle-icon").outerHTML  = icon;
+  document.getElementById("desk-toggle-label").innerText = label;
+  document.getElementById("mob-toggle-label").innerText  = label;
+}
+</script>
+
+</body>
+</html>
